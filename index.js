@@ -7,15 +7,15 @@ app.get('/day', (req, res) => {
   const hours = now.getUTCHours(); // Retorna a hora no formato UTC
   const minutes = now.getUTCMinutes(); // Retorna os minutos no formato UTC
 
-  // Converter para horário de Brasília (UTC-3 ou UTC-2 no horário de verão)
+  // Converter para horário de Brasília (UTC-3)
   const offset = -3; // Ajuste conforme necessário
   const brasiliaHours = (hours + offset + 24) % 24;
 
   // Verificar se é de segunda a sexta
   if (day >= 1 && day <= 5) {
     // Verificar se está no intervalo de horário permitido
-    const isMorning = brasiliaHours >= 7 && brasiliaHours < 11 || (brasiliaHours === 11 && minutes <= 30);
-    const isAfternoon = brasiliaHours >= 12 && brasiliaHours < 17 || (brasiliaHours === 17 && minutes === 0);
+    const isMorning = (brasiliaHours === 7 && minutes >= 30) || (brasiliaHours > 7 && brasiliaHours < 11) || (brasiliaHours === 11 && minutes <= 30);
+    const isAfternoon = (brasiliaHours === 12 && minutes >= 30) || (brasiliaHours > 12 && brasiliaHours < 17);
 
     if (isMorning || isAfternoon) {
       res.json({ dayOfWeek: day });

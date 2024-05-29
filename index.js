@@ -3,7 +3,8 @@ const app = express();
 
 app.get('/day', (req, res) => {
   const now = new Date();
-  const dayOfWeek = now.getDay();
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dayOfWeek = daysOfWeek[now.getDay()];
   res.json({ dayOfWeek });
 });
 
